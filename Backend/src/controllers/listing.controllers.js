@@ -1,7 +1,7 @@
 import Listing from "../models/listing.model.js";
 import { deleteFile, uploadFile } from "../services/storage.service.js";
 
-export const index = async (req, res) => {
+export const getAllListings = async (req, res) => {
   const listing = await Listing.find().populate("owner", "username email");
   // .populate("reviews");
   res.status(200).json({

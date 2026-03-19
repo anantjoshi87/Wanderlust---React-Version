@@ -10,7 +10,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const router = Router();
 
-router.get("/", wrapAsync(listingControllers.index));
+router.get("/", wrapAsync(listingControllers.getAllListings));
 
 router.post(
   "/",

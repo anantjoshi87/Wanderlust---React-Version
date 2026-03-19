@@ -1,4 +1,5 @@
 import { listingSchema } from "../schemas/listing.schema.js";
+import { reviewschema } from "../schemas/review.schema.js";
 import {
   loginSchema,
   registerSchema,
@@ -52,3 +53,15 @@ export const validateOTP = (req, res, next) => {
 
   next();
 };
+
+export const validateReview = (req,res,next) => {
+  const { error } = reviewschema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({
+      message: error.details[0].message,
+    });
+  }
+
+  next();
+}
