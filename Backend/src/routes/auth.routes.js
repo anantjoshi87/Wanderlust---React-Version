@@ -18,49 +18,46 @@ import {
 
 const router = Router();
 
+const {
+  register,
+  login,
+  verifyEmail,
+  getMe,
+  rotateToken,
+  logout,
+  logoutAll,
+  forgotPassword,
+  verifyResetOtp,
+  resetPassword,
+} = authControllers;
+
 router.post(
   "/register",
   validateRegister,
   rateLimitOtp(RegisterOTP),
-  wrapAsync(authControllers.register),
+  wrapAsync(register),
 );
 
-router.post("/login", validateLogin, wrapAsync(authControllers.login));
+router.post("/login", validateLogin, wrapAsync(login));
 
-router.post("/verify-email", wrapAsync(authControllers.verifyEmail));
+router.post("/verify-email", wrapAsync(verifyEmail));
 
-router.get("/get-me", protect, wrapAsync(authControllers.getMe));
+router.get("/get-me", protect, wrapAsync(getMe));
 
-router.get(
-  "/rotate-token",
-  wrapAsync(refreshAuth),
-  wrapAsync(authControllers.rotateToken),
-);
+router.get("/rotate-token", refreshAuth, wrapAsync(rotateToken));
 
-router.post(
-  "/logout",
-  wrapAsync(sessionAuth),
-  wrapAsync(authControllers.logout),
-);
+router.post("/logout", sessionAuth, wrapAsync(logout));
 
-router.post(
-  "/logout-all",
-  wrapAsync(sessionAuth),
-  wrapAsync(authControllers.logoutAll),
-);
+router.post("/logout-all", sessionAuth, wrapAsync(logoutAll));
 
 router.post(
   "/forgot-password",
   rateLimitOtp(ResetOTP),
-  wrapAsync(authControllers.forgotPassword),
+  wrapAsync(forgotPassword),
 );
 
-router.post(
-  "/verify-reset-otp",
-  validateOTP,
-  wrapAsync(authControllers.verifyResetOtp),
-);
+router.post("/verify-reset-otp", validateOTP, wrapAsync(verifyResetOtp));
 
-router.post("/reset-password", wrapAsync(authControllers.resetPassword));
+router.post("/reset-password", wrapAsync(resetPassword));
 
 export default router;

@@ -10,32 +10,26 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const router = Router();
 
-router.get("/", wrapAsync(listingControllers.getAllListings));
+router
+  .route("/")
+  .get(wrapAsync(listingControllers.getAllListings))
+  .post(
+    protect,
+    validateListing,
+    upload.single("image"),
+    wrapAsync(listingControllers.createListing),
+  );
 
-router.post(
-  "/",
-  protect,
-  validateListing,
-  upload.single("image"),
-  wrapAsync(listingControllers.createListing),
-);
-
-router.get("/:id", wrapAsync(listingControllers.showListing));
-
-router.put(
-  "/:id",
-  protect,
-  isListingOwner,
-  validateListing,
-  upload.single("image"),
-  wrapAsync(listingControllers.editListing),
-);
-
-router.delete(
-  "/:id",
-  protect,
-  isListingOwner,
-  wrapAsync(listingControllers.deleteListing),
-);
+router
+  .route("/:id")
+  .get(wrapAsync(listingControllers.showListing))
+  .put(
+    protect,
+    isListingOwner,
+    validateListing,
+    upload.single("image"),
+    wrapAsync(listingControllers.editListing),
+  )
+  .delete(protect, isListingOwner, wrapAsync(listingControllers.deleteListing));
 
 export default router;

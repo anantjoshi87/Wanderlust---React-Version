@@ -7,28 +7,19 @@ import { isReviewAuthor } from "../middlewares/review.middleware.js";
 
 const router = Router({ mergeParams: true });
 
-router.get("/", wrapAsync(reviewControllers.getAllReviews));
+router
+  .route("/")
+  .get(wrapAsync(reviewControllers.getAllReviews))
+  .post(protect, validateReview, wrapAsync(reviewControllers.createReview));
 
-router.post(
-  "/",
-  protect,
-  validateReview,
-  wrapAsync(reviewControllers.createReview),
-);
-
-router.put(
-  "/:review_id",
-  protect,
-  isReviewAuthor,
-  validateReview,
-  wrapAsync(reviewControllers.updateReview),
-);
-
-router.delete(
-  "/:review_id",
-  protect,
-  isReviewAuthor,
-  wrapAsync(reviewControllers.deleteReview),
-);
+router
+  .route("/:review_id")
+  .put(
+    protect,
+    isReviewAuthor,
+    validateReview,
+    wrapAsync(reviewControllers.updateReview),
+  )
+  .delete(protect, isReviewAuthor, wrapAsync(reviewControllers.deleteReview));
 
 export default router;
