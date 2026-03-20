@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import Listing from "./listing.model.js";
+import Review from "./review.model.js";
+import Session from "./session.model.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -27,6 +30,14 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+userSchema.post("findOneAndDelete", async (user) => {
+  if (user) {
+    await Listing.deleteMany({ owner: user._id });
+    // await Review.deleteMany({ author: user._id });
+    await Session.deleteMany({ user: user._id });
+  }
+});
 
 const User = mongoose.model("User", userSchema);
 export default User;

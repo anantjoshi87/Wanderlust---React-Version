@@ -3,9 +3,10 @@ import { deleteFile, uploadFile } from "../services/storage.service.js";
 // import QueryBuilder from "../utils/queryBuilder.js";
 
 export const getAllListings = async (req, res) => {
-  const search = req.query.search;
+  const { search, category } = req.query;
   let queryObj = {};
 
+  //search
   if (search) {
     // queryObj.$or = [
     //   { title: { $regex: search, $options: "i" } },
@@ -14,6 +15,7 @@ export const getAllListings = async (req, res) => {
     queryObj.$text = { $search: search };
   }
 
+  //filter
   const min = req.query.min ? parseInt(req.query.min) : 0;
   const max = req.query.max ? parseInt(req.query.max) : Number.MAX_SAFE_INTEGER;
 
@@ -24,6 +26,12 @@ export const getAllListings = async (req, res) => {
     };
   }
 
+  //category
+  if (category) {
+    queryObj.category = category;
+  }
+
+  //pagination
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
 
@@ -46,9 +54,10 @@ export const getAllListings = async (req, res) => {
   res.status(200).json({
     success: true,
     page,
+    category,
     page_count: Math.ceil(total / limit),
     listing_count: listings.length,
-    hasmore: skip + listings.length < total,
+    hasmorePages: skip + listings.length < total,
     listings,
   });
 };

@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import listingRoutes from "./routes/listing.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
+import userRoutes from "./routes/user.routes.js";
 const app = express();
 
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/listings", listingRoutes);
 app.use("/api/listings/:id/reviews", reviewRoutes);
+app.use("/api/user", userRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err); // log the error for debugging

@@ -26,6 +26,20 @@ const listingSchema = new mongoose.Schema(
         type: String,
       },
     },
+    category: {
+      type: String,
+      enum: [
+        "beach",
+        "mountain",
+        "city",
+        "desert",
+        "forest",
+        "camping",
+        "lake",
+        "historic",
+      ],
+      required: true,
+    },
     price: {
       type: Number,
       min: 1,
@@ -53,6 +67,9 @@ listingSchema.index({
   title: "text",
   address: "text",
 });
+
+listingSchema.index({ category: 1 });
+listingSchema.index({ owner: 1 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {

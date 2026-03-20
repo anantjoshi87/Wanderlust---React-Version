@@ -5,15 +5,15 @@ import Session from "../models/session.model.js";
 import { hashValue } from "../utils/utils.js";
 
 export const protect = async (req, res, next) => {
-  const accesstoken = req.headers.authorization?.split(" ")[1];
+  const accessToken = req.headers.authorization?.split(" ")[1];
 
-  if (!accesstoken) {
+  if (!accessToken) {
     return res.status(401).json({
       message: "access token not found",
     });
   }
 
-  const decoded = jwt.verify(accesstoken, config.JWT_SECRET);
+  const decoded = jwt.verify(accessToken, config.JWT_SECRET);
   const user = await User.findById(decoded.user);
 
   if (!user) {
