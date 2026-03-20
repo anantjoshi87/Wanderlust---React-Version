@@ -1,3 +1,4 @@
+import config from "../config/config.js";
 import Listing from "../models/listing.model.js";
 import Review from "../models/review.model.js";
 
@@ -12,16 +13,36 @@ export const getAllReviews = async (req, res) => {
     });
   }
 
-  const reviews = await Review.find({ listing: listingId }).populate(
-    "author",
-    "username",
-  );
+  let userId = null;
+  const accessToken = req.headers.authorization?.split(" ")[1];
+
+  if (accessToken) {
+    try {
+      const decoded = jwt.verify(accessToken, config.JWT_SECRET);
+      userId = decoded.user;
+    } catch (err) {
+      userId = null;
+    }
+  }
+
+  const reviews = await Review.find({ listing: listingId })
+    .populate("author", "username")
+    .lean();
+
+  let sortedReviews = reviews;
+  if (userId) {
+    sortedReviews = [...reviews].sort((a, b) => {
+      if (a.author._id.toString() === userId.toString()) return -1;
+      if (b.author._id.toString() === userId.toString()) return 1;
+      return 0;
+    });
+  }
 
   return res.status(200).json({
     message: "Reviews fetched successfully",
     status: true,
-    count: reviews.length,
-    reviews,
+    count: sortedReviews.length,
+    sortedReviews,
   });
 };
 

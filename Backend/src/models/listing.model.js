@@ -49,6 +49,11 @@ const listingSchema = new mongoose.Schema(
   },
 );
 
+listingSchema.index({
+  title: "text",
+  address: "text",
+});
+
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {
     await Review.deleteMany({ listing: listing._id });

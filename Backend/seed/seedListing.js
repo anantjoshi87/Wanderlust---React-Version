@@ -21,4 +21,92 @@ export const dummyListings = [
     address: "45 Skyline Ave",
     country: "India",
   },
+  {
+    title: "Luxury Villa with Pool",
+    description: "Private villa with swimming pool and garden.",
+    image: {
+      url: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1170&auto=format&fit=crop",
+      filename: "villa1",
+    },
+    price: 5000,
+    address: "78 Palm Street, Goa",
+    country: "India",
+  },
+  {
+    title: "Mountain Cabin Retreat",
+    description: "Peaceful wooden cabin surrounded by hills.",
+    image: {
+      url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1170&auto=format&fit=crop",
+      filename: "cabin1",
+    },
+    price: 1800,
+    address: "Hilltop Road, Manali",
+    country: "India",
+  },
+  {
+    title: "Beachside Cottage",
+    description: "Wake up to ocean waves in this charming cottage.",
+    image: {
+      url: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1170&auto=format&fit=crop",
+      filename: "beach1",
+    },
+    price: 3200,
+    address: "Sea View Lane, Kerala",
+    country: "India",
+  },
+  {
+    title: "Minimal Studio Apartment",
+    description: "Compact and stylish studio for solo living.",
+    image: {
+      url: "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1170&auto=format&fit=crop",
+      filename: "studio1",
+    },
+    price: 900,
+    address: "21 MG Road, Bangalore",
+    country: "India",
+  },
+  {
+    title: "Farmhouse Escape",
+    description: "A rustic farmhouse perfect for weekend getaways.",
+    image: {
+      url: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1170&auto=format&fit=crop",
+      filename: "farmhouse1",
+    },
+    price: 2700,
+    address: "Village Road, Pune",
+    country: "India",
+  },
+  {
+    title: "Penthouse with Terrace",
+    description: "Premium penthouse featuring private terrace.",
+    image: {
+      url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1170&auto=format&fit=crop",
+      filename: "penthouse1",
+    },
+    price: 6500,
+    address: "High Street, Mumbai",
+    country: "India",
+  },
+  {
+    title: "Lake View House",
+    description: "Beautiful home overlooking a serene lake.",
+    image: {
+      url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1170&auto=format&fit=crop",
+      filename: "lakehouse1",
+    },
+    price: 3500,
+    address: "Lake Road, Udaipur",
+    country: "India",
+  },
+  {
+    title: "Heritage Haveli",
+    description: "Traditional haveli with royal architecture.",
+    image: {
+      url: "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1170&auto=format&fit=crop",
+      filename: "haveli1",
+    },
+    price: 4200,
+    address: "Old City, Jaipur",
+    country: "India",
+  },
 ];

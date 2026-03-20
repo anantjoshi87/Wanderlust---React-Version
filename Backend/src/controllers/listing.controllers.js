@@ -1,13 +1,55 @@
 import Listing from "../models/listing.model.js";
 import { deleteFile, uploadFile } from "../services/storage.service.js";
+// import QueryBuilder from "../utils/queryBuilder.js";
 
 export const getAllListings = async (req, res) => {
-  const listing = await Listing.find().populate("owner", "username email");
-  // .populate("reviews");
+  const search = req.query.search;
+  let queryObj = {};
+
+  if (search) {
+    // queryObj.$or = [
+    //   { title: { $regex: search, $options: "i" } },
+    //   { address: { $regex: search, $options: "i" } },
+    // ];
+    queryObj.$text = { $search: search };
+  }
+
+  const min = req.query.min ? parseInt(req.query.min) : 0;
+  const max = req.query.max ? parseInt(req.query.max) : Number.MAX_SAFE_INTEGER;
+
+  if (req.query.min || req.query.max) {
+    queryObj.price = {
+      $gte: min,
+      $lte: max,
+    };
+  }
+
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const skip = (page - 1) * limit;
+
+  const total = await Listing.countDocuments(queryObj); // page count
+
+  const listings = await Listing.find(queryObj)
+    .populate("owner", "username email")
+    .skip(skip)
+    .limit(limit);
+
+  // const features = new QueryBuilder(Listing.find(), req.query)
+  //   .search()
+  //   .filter()
+  //   .paginate();
+
+  // const listings = await features.query;
+
   res.status(200).json({
     success: true,
-    count: listing.length,
-    listing,
+    page,
+    page_count: Math.ceil(total / limit),
+    listing_count: listings.length,
+    hasmore: skip + listings.length < total,
+    listings,
   });
 };
 
