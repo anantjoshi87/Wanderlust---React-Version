@@ -14,7 +14,7 @@ export const isReviewAuthor = async (req, res, next) => {
 
   if (review.author.toString() !== req.user._id.toString()) {
     return res.status(403).json({
-      message: "Unauthorizes user",
+      message: "Unauthorized user",
     });
   }
 

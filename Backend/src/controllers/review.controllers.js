@@ -48,6 +48,7 @@ export const getAllReviews = async (req, res) => {
 
 export const createReview = async (req, res) => {
   const { id: listingId } = req.params;
+  const { comment, rating } = req.body;
 
   const listing = await Listing.findById(listingId);
 
@@ -69,7 +70,8 @@ export const createReview = async (req, res) => {
   }
 
   const review = await Review.create({
-    ...req.body,
+    comment,
+    rating,
     listing: listingId,
     author: req.user._id,
   });
