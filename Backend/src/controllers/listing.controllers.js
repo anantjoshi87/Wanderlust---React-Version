@@ -2,8 +2,18 @@ import Listing from "../models/listing.model.js";
 import { deleteFile, uploadFile } from "../services/storage.service.js";
 // import QueryBuilder from "../utils/queryBuilder.js";
 
+export const getFeaturedListings = async (req, res) => {
+  const listings = await Listing.aggregate([{ $sample: { size: 8 } }]);
+
+  res.status(200).json({
+    success: true,
+    listings_count: listings.length,
+    listings,
+  });
+};
+
 export const getAllListings = async (req, res) => {
-  const { search, category } = req.query;
+  const { search, category, min, max, page = 1, limit = 10 } = req.query;
   let queryObj = {};
 
   //search
@@ -16,8 +26,8 @@ export const getAllListings = async (req, res) => {
   }
 
   //filter
-  const min = req.query.min ? parseInt(req.query.min) : 0;
-  const max = req.query.max ? parseInt(req.query.max) : Number.MAX_SAFE_INTEGER;
+  min = req.query.min ? parseInt(req.query.min) : 0;
+  max = req.query.max ? parseInt(req.query.max) : Number.MAX_SAFE_INTEGER;
 
   if (req.query.min || req.query.max) {
     queryObj.price = {
@@ -32,8 +42,8 @@ export const getAllListings = async (req, res) => {
   }
 
   //pagination
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  page = parseInt(req.query.page) || 1;
+  limit = parseInt(req.query.limit) || 10;
 
   const skip = (page - 1) * limit;
 

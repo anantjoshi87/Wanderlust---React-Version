@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../components/common/Navbar";
+import Footer from "../components/common/Footer";
+import AppRoutes from "./routes";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <>
+      <Navbar />
+      <AppRoutes />
+      <Footer />
+    </>
+  );
+};
 
-export default App
+export default App;

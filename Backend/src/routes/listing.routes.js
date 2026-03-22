@@ -20,6 +20,8 @@ router
     wrapAsync(listingControllers.createListing),
   );
 
+router.get("/featured", wrapAsync(listingControllers.getFeaturedListings));
+
 router
   .route("/:id")
   .get(wrapAsync(listingControllers.showListing))
