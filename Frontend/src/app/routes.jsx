@@ -16,34 +16,45 @@ import Profile from "../pages/user/Profile";
 import Dashboard from "../pages/user/Dashboard";
 import MyListings from "../pages/user/MyListings";
 
+import MainLayout from "@/layouts/MainLayout";
+import AuthLayout from "@/layouts/AuthLayout";
+
 import ProtectedRoute from "../components/common/ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* public routes */}
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/verify-Email" element={<VerifyOtp />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
+      {/* Mainlayout */}
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<HomePage />} />
 
-      {/* listing routes */}
-      <Route path="/listings" element={<ListingsPage />} />
-      <Route path="/listings/:id" element={<ListingDetails />} />
+        <Route path="/listings">
+          {/* listing routes */}
+          <Route index element={<ListingsPage />} />
+          <Route path=":id" element={<ListingDetails />} />
 
-      {/* protected listings */}
-      <Route path="/listings" element={<ProtectedRoute />}>
-        <Route path="new" element={<CreateListing />} />
-        <Route path=":id/edit" element={<EditListing />} />
+          {/* protected listings */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="new" element={<CreateListing />} />
+            <Route path=":id/edit" element={<EditListing />} />
+          </Route>
+        </Route>
       </Route>
 
-      {/* protected user */}
-      <Route path="/user" element={<ProtectedRoute />}>
-        <Route path="profile" element={<Profile />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="my-listings" element={<MyListings />} />
+      {/* Authlayout */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/verify-email" element={<VerifyOtp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        {/* protected user */}
+        <Route path="/user" element={<ProtectedRoute />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="my-listings" element={<MyListings />} />
+        </Route>
       </Route>
     </Routes>
   );
