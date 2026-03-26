@@ -6,7 +6,7 @@ const ListingCard = ({ listing, varient = "grid" }) => {
   return (
     <Link to={`/listings/${listing._id}`}>
       <div
-        className={`flex flex-col cursor-pointer pointer-events-none select-none group 
+        className={`flex flex-col cursor-pointer select-none group
       ${varient === "carousel" ? "mr-6" : ""} 
         `}
       >

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const hostCTASection = () => {
   return (
     <section className="bg-red-50 py-20">
-      <div className="max-w-[1440px] mx-auto px-20">
+      <div className="max-w-[1360px] mx-auto px-6 lg:px-10">
         <div className="text-center space-y-6 max-w-xl mx-auto">
           <h2 className="text-3xl font-extrabold text-gray-900">
             Become a host today

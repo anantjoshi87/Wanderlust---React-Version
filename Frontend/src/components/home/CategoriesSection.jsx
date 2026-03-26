@@ -15,12 +15,13 @@ const CategoriesSection = () => {
 
             return (
               <Link key={category.id} to={`listings?category=${category.key}`}>
-                <div className="relative group cursor-pointer rounded-2xl overflow-hidden shadow-md hover:shadow-lg select-none pointer-events-none">
+                <div className="relative group cursor-pointer rounded-2xl overflow-hidden shadow-md hover:shadow-lg select-none">
                   <div className="aspect-20/9">
                     <img
                       src={category.image}
                       alt={category.label}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      loading="lazy"
                     />
                   </div>
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />

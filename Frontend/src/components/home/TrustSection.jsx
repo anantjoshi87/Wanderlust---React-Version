@@ -3,7 +3,7 @@ import { trustFeatures } from "@/constants";
 const TrustSection = () => {
   return (
     <section className="bg-gray-50 py-20">
-      <div className="max-w-[1440px] mx-auto px-20">
+      <div className="max-w-[1360px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
           {trustFeatures.map((feature) => {
             const IconComponent = feature.icon;
