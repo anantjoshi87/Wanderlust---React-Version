@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
   return (
     <section className="py-12 lg:py-16">
-      <div className="max-w-[1360px] mx-auto px-8 lg:px-10">
+      <div className="max-w-[1360px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-[minmax(0,45%)_minmax(0,55%)] gap-12 items-center">
           <div className="flex flex-col justify-center max-w-xl">
             <div className="flex flex-col">
@@ -17,17 +17,15 @@ const HeroSection = () => {
               </p>
             </div>
             <div className="flex gap-4">
-              <Link
-                to={"/listings"}
-                className="bg-red-500 py-3 px-3 sm:py-3 sm:px-6 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition hover:bg-red-600 whitespace-nowrap"
-              >
-                Explore Listings
+              <Link to={"/listings"}>
+                <button className="bg-red-500 py-3 px-4 sm:py-3 sm:px-6 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition hover:bg-red-600 whitespace-nowrap cursor-pointer">
+                  Explore Listings
+                </button>
               </Link>
-              <Link
-                to={"/listings/new"}
-                className="py-3 px-3 sm:py-3 sm:px-6 rounded-xl font-semibold border-2 border-gray-300 hover:border-gray-400 transition whitespace-nowrap"
-              >
-                Become a Host
+              <Link to={"/listings/new"}>
+                <button className="py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-semibold border-2 border-gray-300 hover:border-gray-400 transition whitespace-nowrap cursor-pointer">
+                  Become a Host
+                </button>
               </Link>
             </div>
           </div>

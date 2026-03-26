@@ -1,17 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const HostCTASection = () => {
+const hostCTASection = () => {
   return (
-    <section className="home-host-cta">
-      <div className="home-host-cta__content">
-        <h2>Become a host</h2>
-        <p>Share your space and earn on your schedule.</p>
+    <section className="bg-red-50 py-20">
+      <div className="max-w-[1440px] mx-auto px-20">
+        <div className="text-center space-y-6 max-w-xl mx-auto">
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            Become a host today
+          </h2>
+          <p className=" text-gray-600">
+            Share your place and earn income while connecting with travelers
+            from around the world
+          </p>
+          <Link to={"/listings/new"}>
+            <button className="px-8 py-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition shadow-md hover:shadow-lg text-lg font-medium">
+              Become a Host
+            </button>
+          </Link>
+        </div>
       </div>
-      <button className="home-host-cta__button" type="button">
-        Start hosting
-      </button>
     </section>
   );
 };
 
-export default HostCTASection;
+export default hostCTASection;

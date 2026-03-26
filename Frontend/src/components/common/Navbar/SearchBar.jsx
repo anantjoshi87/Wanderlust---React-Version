@@ -4,7 +4,7 @@ import React from "react";
 
 const SearchBar = () => {
   return (
-    <div className="hidden md:flex flex-1 justify-center">
+    <div className="hidden md:flex flex-1 justify-center select-none">
       <div className="flex items-center border border-gray-200 rounded-full h-13 px-3 py-1.5 shadow-sm hover:shadow-md transition ">
         <label htmlFor="searchbox" className="pr-2">
           <Search className="w-6 h-6 text-gray-400" />

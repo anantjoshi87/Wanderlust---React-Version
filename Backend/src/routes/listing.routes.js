@@ -22,6 +22,8 @@ router
 
 router.get("/featured", wrapAsync(listingControllers.getFeaturedListings));
 
+router.get("/random", wrapAsync(listingControllers.getRandomListings));
+
 router
   .route("/:id")
   .get(wrapAsync(listingControllers.showListing))

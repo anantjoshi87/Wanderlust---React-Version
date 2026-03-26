@@ -7,7 +7,7 @@ export const verifyEmail = (data) =>
 
 export const loginUser = (data) => api.post("/auth/login", data);
 
-export const getUser = () => api.get("/users/me");
+export const getUser = () => api.get("/user/me");
 
 export const logoutUser = () => api.post("/auth/logout");
 

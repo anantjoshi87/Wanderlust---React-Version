@@ -12,6 +12,17 @@ export const getFeaturedListings = async (req, res) => {
   });
 };
 
+export const getRandomListings = async (req,res) => {
+  const limit = parseInt(req.query.limit) || 8;
+  const listings = await Listing.aggregate([{ $sample: { size: limit } }]);
+
+  res.status(200).json({
+    success: true,
+    listings_count: listings.length,
+    listings,
+  });
+}
+
 export const getAllListings = async (req, res) => {
   const { search, category, min, max, page = 1, limit = 10 } = req.query;
   let queryObj = {};
