@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ListingCard from "../Listings/ListingCard";
+import ListingCard from "../Listings/cards/ListingCard";
 import { getRandomListings } from "@/api/listings.api";
 import { Link } from "react-router-dom";
 

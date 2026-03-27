@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ListingCard from "../Listings/ListingCard";
+import ListingCard from "../Listings/cards/ListingCard";
 import { getFeaturedListings } from "@/api/listings.api";
 import Marquee from "react-fast-marquee";
 

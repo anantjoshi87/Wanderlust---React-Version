@@ -24,16 +24,16 @@ export const getRandomListings = async (req,res) => {
 }
 
 export const getAllListings = async (req, res) => {
-  const { search, category, min, max, page = 1, limit = 10 } = req.query;
+  let { search, category, min, max, page = 1, limit = 12 } = req.query;
   let queryObj = {};
 
   //search
   if (search) {
-    // queryObj.$or = [
-    //   { title: { $regex: search, $options: "i" } },
-    //   { address: { $regex: search, $options: "i" } },
-    // ];
-    queryObj.$text = { $search: search };
+    queryObj.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { address: { $regex: search, $options: "i" } },
+    ];
+    // queryObj.$text = { $search: search };
   }
 
   //filter
@@ -54,7 +54,7 @@ export const getAllListings = async (req, res) => {
 
   //pagination
   page = parseInt(req.query.page) || 1;
-  limit = parseInt(req.query.limit) || 10;
+  limit = parseInt(req.query.limit) || 12;
 
   const skip = (page - 1) * limit;
 
