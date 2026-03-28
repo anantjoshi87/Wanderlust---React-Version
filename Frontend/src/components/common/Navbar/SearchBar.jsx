@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const SearchBar = ({ variant, onSearch = () => {} }) => {
-  const [inputValue, setinputValue] = useState("");
+const SearchBar = ({ variant, onSearch = () => {}, currentSearch = "" }) => {
+  const [inputValue, setinputValue] = useState(currentSearch ?? "");
+
+  useEffect(() => {
+    setinputValue(currentSearch);
+  }, [currentSearch]);
+
   return (
     <div
       className={`flex-1 justify-center select-none ${variant === "allListingsTab" ? "flex min-w-0" : "hidden md:flex "}`}

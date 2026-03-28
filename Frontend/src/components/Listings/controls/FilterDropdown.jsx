@@ -14,12 +14,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FunnelPlus } from "lucide-react";
 
-const priceRanges = [
-  "Under ₹3000",
-  "₹3000–₹5000",
-  "₹5000–₹8000",
-  "Above ₹8000",
-];
+const priceRanges = {
+  "Under $3000": { min: "", max: "3000" },
+  "$3000-$5000": { min: "3000", max: "5000" },
+  "$5000-$8000": { min: "5000", max: "8000" },
+  "Above $8000": { min: "8000", max: "" },
+};
+const priceRangeLabels = Object.keys(priceRanges);
 
 const categories = [
   "beach",
@@ -32,10 +33,12 @@ const categories = [
   "historic",
 ];
 
-export function FilterDropdown() {
-  const [selectedPrice, setSelectedPrice] = React.useState("");
-  const [selectedCategory, setSelectedCategory] = React.useState("");
-
+export function FilterDropdown({
+  selectedPrice,
+  selectedCategory,
+  onPriceChange,
+  onCategoryChange,
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -49,14 +52,19 @@ export function FilterDropdown() {
           <DropdownMenuLabel>Price Range</DropdownMenuLabel>
 
           <DropdownMenuRadioGroup value={selectedPrice}>
-            {priceRanges.map((price) => (
+            {priceRangeLabels.map((price) => (
               <DropdownMenuRadioItem
                 key={price}
                 value={price}
                 onSelect={(e) => {
                   e.preventDefault();
-                  setSelectedPrice(selectedPrice === price ? "" : price);
-                  
+                  const isSame = selectedPrice === price;
+                  if (isSame) {
+                    onPriceChange("", "", "");
+                    return;
+                  }
+                  const range = priceRanges[price];
+                  onPriceChange(range.min, range.max, price);
                 }}
               >
                 {price}
@@ -75,7 +83,7 @@ export function FilterDropdown() {
                 value={category}
                 onSelect={(e) => {
                   e.preventDefault();
-                  setSelectedCategory(
+                  onCategoryChange(
                     selectedCategory === category ? "" : category,
                   );
                 }}

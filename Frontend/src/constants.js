@@ -15,7 +15,7 @@ export const categories = [
   {
     id: 1,
     name: "Mountains",
-    key: "mountains",
+    key: "mountain",
     icon: Mountain,
     image:
       "https://images.unsplash.com/photo-1586972161369-9661ee10aae9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3VudGFpbiUyMGxhbmRzY2FwZSUyMHBlYWt8ZW58MXx8fHwxNzc0MjQ1MTA1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
@@ -23,7 +23,7 @@ export const categories = [
   {
     id: 2,
     name: "Beaches",
-    key: "beaches",
+    key: "beach",
     icon: TreePalm,
     image:
       "https://images.unsplash.com/photo-1714412192114-61dca8f15f68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cm9waWNhbCUyMGJlYWNoJTIwcGFyYWRpc2V8ZW58MXx8fHwxNzc0MjEwNDE3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
@@ -39,7 +39,7 @@ export const categories = [
   {
     id: 4,
     name: "Cabins",
-    key: "cabins",
+    key: "cabin",
     icon: Home,
     image:
       "https://images.unsplash.com/photo-1602331407936-58a39a558710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b29kZW4lMjBjYWJpbiUyMHdvb2RzfGVufDF8fHx8MTc3NDI0NTEwNnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
@@ -63,7 +63,7 @@ export const categories = [
   {
     id: 7,
     name: "Lake",
-    key: "Lake",
+    key: "lake",
     icon: Waves,
     image:
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

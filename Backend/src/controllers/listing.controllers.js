@@ -49,7 +49,7 @@ export const getAllListings = async (req, res) => {
 
   //category
   if (category) {
-    queryObj.category = category;
+    queryObj.category = new RegExp(`^${category}$`, "i");
   }
 
   //pagination

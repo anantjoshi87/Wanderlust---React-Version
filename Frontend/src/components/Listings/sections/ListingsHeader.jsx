@@ -1,7 +1,14 @@
 import React from "react";
 import ListingsToolbar from "./ListingsToolbar";
 
-const ListingsHeader = ({ onSearch }) => {
+const ListingsHeader = ({
+  onSearch,
+  currentSearch,
+  selectedPrice,
+  selectedCategory,
+  onPriceChange,
+  onCategoryChange,
+}) => {
   return (
     <header className="py-12">
       <div className="max-w-[1360px] mx-auto px-6 lg:px-10">
@@ -12,7 +19,14 @@ const ListingsHeader = ({ onSearch }) => {
           </p>
         </div>
         <div className="flex justify-center">
-          <ListingsToolbar onSearch={onSearch} />
+          <ListingsToolbar
+            onSearch={onSearch}
+            currentSearch={currentSearch}
+            selectedPrice={selectedPrice}
+            selectedCategory={selectedCategory}
+            onPriceChange={onPriceChange}
+            onCategoryChange={onCategoryChange}
+          />
         </div>
       </div>
     </header>

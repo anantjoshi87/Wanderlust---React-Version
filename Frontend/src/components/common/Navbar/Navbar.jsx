@@ -47,7 +47,7 @@ const Navbar = () => {
         <div className="flex flex-1 sm:flex-0 items-center justify-end gap-5 text-md font-medium">
           <div className="hidden lg:flex">
             <NavLink
-              to="/listings"
+              to="/"
               className={({ isActive }) =>
                 isActive
                   ? "text-gray-900 font-semibold"
