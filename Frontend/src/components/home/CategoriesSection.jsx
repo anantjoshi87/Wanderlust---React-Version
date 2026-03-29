@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { categories } from "@/constants";
+import { optimizeImage } from "@/utils/getImageUrl";
 
 const CategoriesSection = () => {
   return (
@@ -18,7 +19,7 @@ const CategoriesSection = () => {
                 <div className="relative group cursor-pointer rounded-2xl overflow-hidden shadow-md hover:shadow-lg select-none">
                   <div className="aspect-20/9">
                     <img
-                      src={category.image}
+                      src={optimizeImage(category.image)}
                       alt={category.label}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       loading="lazy"

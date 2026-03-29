@@ -12,28 +12,25 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-// verify the connection configuration
-transporter.verify((error, success) => {
+transporter.verify((error) => {
   if (error) {
     console.error("Error connecting to email server:", error);
   } else {
-    console.log("Email server is ready to send messages");
+    console.log("Email server ready");
   }
 });
 
-// Function to send email
 export const sendEmail = async (to, subject, text, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `"Your Name" <${config.GOOGLE_USER}>`, // sender address
-      to, // list of receivers
-      subject, // Subject line
-      text, // plain text body
-      html, // html body
+      from: `"Wanderlust" <${config.GOOGLE_USER}>`,
+      to,
+      subject,
+      text,
+      html,
     });
 
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    console.log("Message sent:", info.messageId);
   } catch (error) {
     console.error("Error sending email:", error);
   }

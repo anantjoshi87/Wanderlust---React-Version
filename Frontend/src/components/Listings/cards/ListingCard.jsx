@@ -1,3 +1,4 @@
+import { optimizeImage } from "@/utils/getImageUrl";
 import { Star } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -19,8 +20,10 @@ const ListingCard = ({ listing, varient = "grid" }) => {
           }`}
         >
           <img
-            src={listing.image?.url}
+            src={optimizeImage(listing.image?.url)}
             alt={listing.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
@@ -47,4 +50,4 @@ const ListingCard = ({ listing, varient = "grid" }) => {
   );
 };
 
-export default ListingCard;
+export default React.memo(ListingCard);

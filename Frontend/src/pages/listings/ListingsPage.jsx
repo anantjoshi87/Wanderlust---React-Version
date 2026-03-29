@@ -1,4 +1,5 @@
 import { getAllListings } from "@/api/listings.api";
+import Pagination from "@/components/Listings/sections/Pagination";
 import ListingsGridSection from "@/components/Listings/sections/ListingsGridSection";
 import ListingsHeader from "@/components/Listings/sections/ListingsHeader";
 import React, { useEffect, useState } from "react";
@@ -8,16 +9,17 @@ const ListingsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
-  const [selectedPrice, setSelectedPrice] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const selectedPrice = searchParams.get("price") || "";
+  const selectedCategory = searchParams.get("category") || "";
 
   useEffect(() => {
     const searchQuery = searchParams.get("search") || "";
     const category = searchParams.get("category") || "";
     const min = searchParams.get("min") || ""; //min price
     const max = searchParams.get("max") || ""; //max price
-    const price = searchParams.get("price") || "";
 
     const fetchListings = async () => {
       try {
@@ -28,31 +30,37 @@ const ListingsPage = () => {
           category,
           min,
           max,
+          page,
+          limit: 12,
         });
-        setListings(res.data.listings ?? []);
+
+        const newListings = res.data.listings ?? [];
+        if (page === 1) setListings(newListings ?? []);
+        else {
+          setListings((prev) => [...prev, ...newListings]);
+        }
+        setHasMore(res.data.hasmorePages);
+
       } catch (err) {
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
-    setSelectedCategory(category);
-    setSelectedPrice(price);
     fetchListings();
-  }, [searchParams]);
+  }, [searchParams, page]);
 
   const handleCategoryChange = (value) => {
     const params = new URLSearchParams(searchParams);
 
     if (value) {
       params.set("category", value);
-      setSelectedCategory(value);
     } else {
       params.delete("category");
-      setSelectedCategory("");
     }
 
     setSearchParams(params);
+    setPage(1);
   };
 
   const handlePriceChange = (min, max, label = "") => {
@@ -67,9 +75,8 @@ const ListingsPage = () => {
     if (label) params.set("price", label);
     else params.delete("price");
 
-    setSelectedPrice(label || "");
-
     setSearchParams(params);
+    setPage(1);
   };
 
   const handleSearchTerm = (value) => {
@@ -82,6 +89,11 @@ const ListingsPage = () => {
       params.delete("search");
     }
     setSearchParams(params);
+    setPage(1);
+  };
+
+  const handleLoadMore = () => {
+    setPage((prev) => prev + 1);
   };
 
   const currentSearch = searchParams.get("search") || "";
@@ -97,6 +109,7 @@ const ListingsPage = () => {
         onCategoryChange={handleCategoryChange}
       />
       <ListingsGridSection listings={listings} />
+      {hasMore && <Pagination loading={loading} onLoadMore={handleLoadMore} />}
     </div>
   );
 };
