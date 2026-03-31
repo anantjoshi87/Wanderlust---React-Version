@@ -22,6 +22,7 @@ const {
   register,
   login,
   verifyEmail,
+  resendOtp,
   getMe,
   rotateToken,
   logout,
@@ -49,6 +50,8 @@ router.get("/rotate-token", refreshAuth, wrapAsync(rotateToken));
 router.post("/logout", sessionAuth, wrapAsync(logout));
 
 router.post("/logout-all", sessionAuth, wrapAsync(logoutAll));
+
+router.post("/resend-otp", wrapAsync(resendOtp));
 
 router.post(
   "/forgot-password",

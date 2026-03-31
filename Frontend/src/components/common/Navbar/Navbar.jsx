@@ -12,13 +12,14 @@ import {
 import SearchBar from "./SearchBar";
 
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
+  const { user, loading } = useAuth();
   const { pathname } = useLocation();
   const hideSearch = pathname === "/listings";
 
   const navigate = useNavigate();
-  const user = null;
 
   const handleSearch = (value) => {
     const query = value?.trim() || "";
@@ -71,7 +72,13 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          {user ? <AuthMenu /> : <AuthButtons />}
+          {loading ? (
+            <div className="w-20 h-10 rounded-full bg-gray-100 animate-pulse" />
+          ) : user ? (
+            <AuthMenu />
+          ) : (
+            <AuthButtons />
+          )}
         </div>
       </div>
     </nav>

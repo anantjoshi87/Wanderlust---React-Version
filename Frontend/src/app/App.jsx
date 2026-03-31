@@ -1,12 +1,14 @@
 import React from "react";
 import Navbar from "../components/common/Navbar/Navbar";
 import Footer from "../components/common/Footer";
-import AppRoutes from "./routes";
+import RouterProvider from "./RouterProvider";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <>
-      <AppRoutes />
+      <Toaster position="top-right"/>
+      <RouterProvider />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 
-import Login from "../pages/auth/login";
+import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import VerifyOtp from "../pages/auth/VerifyOtp";
 import ForgotPassword from "../pages/auth/ForgotPassword";
@@ -21,7 +21,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 
 import ProtectedRoute from "../components/common/ProtectedRoute";
 
-const AppRoutes = () => {
+const RouterProvider = () => {
   return (
     <Routes>
       {/* Mainlayout */}
@@ -60,4 +60,4 @@ const AppRoutes = () => {
   );
 };
 
-export default AppRoutes;
+export default RouterProvider;

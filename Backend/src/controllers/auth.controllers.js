@@ -14,16 +14,15 @@ import Session from "../models/session.model.js";
 import ResetOTP from "../models/resetOtp.model.js";
 
 export const register = async (req, res) => {
-    
   const { username, email, password } = req.body;
 
   const isAlreadyRegistered = await User.findOne({
-    $or: [{ username }, { email }],
+    email,
   });
 
   if (isAlreadyRegistered) {
     return res.status(409).json({
-      message: "username or email already exists",
+      message: "User with this email already exists!",
     });
   }
 
@@ -96,6 +95,54 @@ export const verifyEmail = async (req, res) => {
   });
 };
 
+export const resendOtp = async (req, res) => {
+  const { email } = req.body;
+
+  const otpDoc = await RegisterOTP.findOne({ email });
+
+  if (!otpDoc) {
+    return res.status(400).json({
+      message: "No pending verification found",
+    });
+  }
+
+  const now = Date.now();
+  const cooldown = 30 * 1000;
+  if (now - otpDoc.lastSentAt < cooldown) {
+    return res.status(429).json({
+      message: "Please wait before requesting another otp",
+    });
+  }
+
+  if (otpDoc.resendCount >= 5) {
+    return res.status(429).json({
+      message: "Maximum resend attempts reached",
+    });
+  }
+
+  const newOtp = generateOtp();
+  const html = getOtpHtml(newOtp);
+
+  otpDoc.otpHash = hashValue(newOtp);
+  otpDoc.expiresAt = now + 10 * 60 * 1000;
+  otpDoc.lastSentAt = now;
+  otpDoc.resendCount += 1;
+
+  await otpDoc.save();
+
+  await sendEmail(
+    email,
+    "OTP Verification",
+    `Your OTP code is ${newOtp}`,
+    html,
+  );
+
+  return res.status(201).json({
+    message: "OTP sent successfully",
+    attemptsLeft: 5 - otpDoc.resendCount,
+  });
+};
+
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -103,7 +150,7 @@ export const login = async (req, res) => {
 
   if (!user) {
     return res.status(401).json({
-      message: "Invalid credentials",
+      message: "Wrong email or password",
     });
   }
 
@@ -111,7 +158,7 @@ export const login = async (req, res) => {
 
   if (!isPasswordValid) {
     return res.status(401).json({
-      message: "Invalid credentials",
+      message: "Wrong email or password",
     });
   }
 

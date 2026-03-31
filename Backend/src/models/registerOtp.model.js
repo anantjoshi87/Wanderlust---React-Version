@@ -24,6 +24,14 @@ const otpSchema = new mongoose.Schema(
       default: () => new Date(Date.now() + 10 * 60 * 1000),
       index: { expires: 0 },
     },
+    resendCount: {
+      type: Number,
+      default: 0,
+    },
+    lastSentAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
