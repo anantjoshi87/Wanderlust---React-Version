@@ -6,9 +6,11 @@ import GoogleIcon from "@/assets/icons/GoogleIcon";
 import { useAuth } from "@/hooks/useAuth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/auth.schema";
+import { Spinner } from "../ui/spinner";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubbmiting, setIsSubbmiting] = useState(false);
   const [serverError, setServerError] = useState("");
 
   const {
@@ -24,11 +26,14 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setIsSubbmiting(true);
     try {
       await login(data);
       setTimeout(() => navigate("/", { replace: true }), 300);
     } catch (err) {
       setServerError(err.response?.data?.message || "Wrong Email or Password");
+    } finally {
+      setIsSubbmiting(false);
     }
   };
 
@@ -134,9 +139,10 @@ const LoginForm = () => {
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition cursor-pointer"
+          disabled={isSubbmiting}
+          className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition cursor-pointer flex justify-center"
         >
-          Login
+          {isSubbmiting ? <Spinner className="size-8" /> : "Login"}
         </button>
 
         {/* Divider */}

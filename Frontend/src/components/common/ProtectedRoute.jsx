@@ -1,16 +1,27 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import Loader from "./Loader";
+import { useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const {
+    user,
+    loading,
+    setShowLoginModal,
+  } = useAuth();
 
-  if (loading) {
-    return <Loader />;
-  }
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      setShowLoginModal(true);
+    }
+  }, [loading, user, setShowLoginModal]);
+
+  if (loading) return <Loader />;
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={location.state?.from || "/"} replace />;
   }
 
   return children || <Outlet />;

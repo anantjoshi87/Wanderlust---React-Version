@@ -6,7 +6,7 @@ export const loginSchema = z.object({
     .trim()
     .min(1, "Email is required")
     .email("Invalid email address"),
-  password: z.string(),
+  password: z.string().min(1, "Password is required"),
 });
 
 export const registerSchma = z

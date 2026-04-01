@@ -6,10 +6,12 @@ import GoogleIcon from "@/assets/icons/GoogleIcon";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchma } from "@/schemas/auth.schema";
 import { useAuth } from "@/hooks/useAuth";
+import { Spinner } from "../ui/spinner";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isSubbmiting, setIsSubbmiting] = useState(false);
   const [serverError, setServerError] = useState("");
 
   const {
@@ -25,7 +27,9 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setIsSubbmiting(true);
     try {
+      
       const { confirmPassword, ...payload } = data;
       await registerUser(payload);
       navigate("/verify-email", {
@@ -37,6 +41,8 @@ const RegisterForm = () => {
       setServerError(
         err.response?.data?.message || "User with this email already exists!",
       );
+    } finally {
+      setIsSubbmiting(false);
     }
   };
 
@@ -183,13 +189,13 @@ const RegisterForm = () => {
         {serverError && (
           <p className="text-red-500 text-sm text-center">{serverError}</p>
         )}
-        
+
         {/* Register Button */}
         <button
           type="submit"
           className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition cursor-pointer"
         >
-          Create Account
+          {isSubbmiting ? <Spinner className="size-8" /> : "Create Account"}
         </button>
 
         {/* Divider */}

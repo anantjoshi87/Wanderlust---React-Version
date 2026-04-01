@@ -13,11 +13,12 @@ import SearchBar from "./SearchBar";
 
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { HashLink } from "react-router-hash-link";
 
 const Navbar = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, setShowLoginModal } = useAuth();
   const { pathname } = useLocation();
-  const hideSearch = pathname === "/listings";
+  const hideComponent = pathname === "/";
 
   const navigate = useNavigate();
 
@@ -29,6 +30,16 @@ const Navbar = () => {
       navigate("/listings");
     }
   };
+
+  const handleBecomeHost = (e) => {
+    if (!user) {
+      e.preventDefault();
+      setShowLoginModal(true);
+      return;
+    }
+    navigate("/listings/new");
+  };
+
   return (
     <nav className="h-20 bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm border-b border-gray-100">
       <div className="max-w-[1360px] mx-auto px-6 lg:px-10 h-full flex items-center justify-between">
@@ -42,26 +53,26 @@ const Navbar = () => {
         </div>
 
         {/* Search Bar */}
-        {!hideSearch && <SearchBar onSearch={handleSearch} />}
+        {hideComponent && <SearchBar onSearch={handleSearch} />}
 
         {/* Right Navigation */}
         <div className="flex flex-1 sm:flex-0 items-center justify-end gap-5 text-md font-medium">
-          <div className="hidden lg:flex">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-gray-900 font-semibold"
-                  : "text-gray-700 hover:text-gray-900 transition-colors duration-200"
-              }
-            >
-              Categories
-            </NavLink>
-          </div>
+          {hideComponent && (
+            <div className="hidden lg:flex">
+              <HashLink
+                smooth
+                to="/#categories"
+                className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
+              >
+                Categories
+              </HashLink>
+            </div>
+          )}
 
           <div className="hidden lg:flex">
             <NavLink
               to="/listings/new"
+              onClick={handleBecomeHost}
               className={({ isActive }) =>
                 isActive
                   ? "text-gray-900 font-semibold"

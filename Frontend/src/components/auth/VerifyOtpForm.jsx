@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 const VerifyOtpForm = () => {
   const [countDown, setCountDown] = useState(0);
   const [attemptsLeft, setAttemptsLeft] = useState(5);
+  const [isSubbmiting, setIsSubbmiting] = useState(false);
   const [serverError, setServerError] = useState("");
 
   const location = useLocation();
@@ -28,6 +29,7 @@ const VerifyOtpForm = () => {
   const { emailVerify, resendVerificationOtp } = useAuth();
 
   const onSubmit = async (data) => {
+    setIsSubbmiting(true);
     try {
       await emailVerify({ email, otp: data.otp });
       navigate("/login", { replace: true });
@@ -36,6 +38,8 @@ const VerifyOtpForm = () => {
       setServerError(
         err.response?.data?.message || "User with this email already exists!",
       );
+    } finally {
+      setIsSubbmiting(false);
     }
   };
 
@@ -114,7 +118,7 @@ const VerifyOtpForm = () => {
           type="submit"
           className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition"
         >
-          Verify OTP
+          {isSubbmiting ? <Spinner className="size-8" /> : "Verify OTP"}
         </button>
 
         {/* Resend */}

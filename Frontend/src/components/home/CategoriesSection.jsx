@@ -5,7 +5,7 @@ import { optimizeImage } from "@/utils/getImageUrl";
 
 const CategoriesSection = () => {
   return (
-    <section className="py-16">
+    <section className="py-16 scroll-mt-12" id="categories">
       <div className="max-w-[1360px] mx-auto px-6 lg:px-10">
         <h2 className="text-3xl font-extrabold leading-tight mb-4">
           Explore By Category

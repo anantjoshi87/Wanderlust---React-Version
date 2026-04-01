@@ -21,6 +21,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const didInit = useRef(false);
 
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [redirectAfterLogin, setRedirectAfterLogin] = useState(null);
+
   const checkAuth = async () => {
     try {
       const tokenRes = await rotateToken();
@@ -115,6 +118,11 @@ export const AuthProvider = ({ children }) => {
         forgotPassword,
         verifyResetOtp,
         resetPassword,
+
+        showLoginModal,
+        setShowLoginModal,
+        redirectAfterLogin,
+        setRedirectAfterLogin,
       }}
     >
       {children}
