@@ -1,37 +1,20 @@
-import nodemailer from "nodemailer";
-import config from "../config/config.js";
+import { Resend } from "resend";
+import { getOtpHtml } from "../utils/utils.js";
 
-export const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "OAuth2",
-    user: config.GOOGLE_USER,
-    clientId: config.GOOGLE_CLIENT_ID,
-    clientSecret: config.GOOGLE_CLIENT_SECRET,
-    refreshToken: config.GOOGLE_REFRESH_TOKEN,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-transporter.verify((error) => {
+export const sendEmail = async (email, otp) => {
+  const html = getOtpHtml(otp);
+  const { data, error } = await resend.emails.send({
+    from: "WanderLust <onboarding@resend.dev>",
+    to: email,
+    subject: "OTP Verification",
+    html,
+  });
+
   if (error) {
-    console.error("Error connecting to email server:", error);
-  } else {
-    console.log("Email server ready");
+    throw new Error(error.message);
   }
-});
 
-export const sendEmail = async (to, subject, text, html) => {
-  try {
-    const info = await transporter.sendMail({
-      from: `"Wanderlust" <${config.GOOGLE_USER}>`,
-      to,
-      subject,
-      text,
-      html,
-    });
-
-    console.log("Message sent:", info.messageId);
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
+  return data;
 };

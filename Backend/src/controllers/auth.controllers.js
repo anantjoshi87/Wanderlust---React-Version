@@ -29,18 +29,20 @@ export const register = async (req, res) => {
   const passwordHash = await hashPassword(password);
 
   const otp = generateOtp();
-  const html = getOtpHtml(otp);
-
   const otpHash = hashValue(otp);
 
-  await RegisterOTP.create({
-    username,
-    email,
-    passwordHash,
-    otpHash,
-  });
+  try {
+    await sendEmail(email, otp);
 
-  await sendEmail(email, "OTP Verification", `Your OTP code is ${otp}`, html);
+    await RegisterOTP.create({
+      username,
+      email,
+      passwordHash,
+      otpHash,
+    });
+  } catch (err) {
+    throw err;
+  }
 
   return res.status(201).json({
     message: "OTP sent successfully",
@@ -121,23 +123,21 @@ export const resendOtp = async (req, res) => {
   }
 
   const newOtp = generateOtp();
-  const html = getOtpHtml(newOtp);
 
-  otpDoc.otpHash = hashValue(newOtp);
-  otpDoc.expiresAt = now + 10 * 60 * 1000;
-  otpDoc.lastSentAt = now;
-  otpDoc.resendCount += 1;
+  try {
+    otpDoc.otpHash = hashValue(newOtp);
+    otpDoc.expiresAt = now + 10 * 60 * 1000;
+    otpDoc.lastSentAt = now;
+    otpDoc.resendCount += 1;
 
-  await otpDoc.save();
+    await otpDoc.save();
 
-  await sendEmail(
-    email,
-    "OTP Verification",
-    `Your OTP code is ${newOtp}`,
-    html,
-  );
+    await sendEmail(email, newOtp);
+  } catch (err) {
+    throw err;
+  }
 
-  return res.status(201).json({
+  return res.status(200).json({
     message: "OTP sent successfully",
     attemptsLeft: 5 - otpDoc.resendCount,
   });
