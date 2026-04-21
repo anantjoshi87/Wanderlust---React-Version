@@ -1,5 +1,5 @@
 import { footerLinks } from "@/constants";
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Globe, Mail, MessageCircle, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -73,25 +73,25 @@ const Footer = () => {
                   to={"#"}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition"
                 >
-                  <Facebook className="w-5 h-5 text-gray-700" />
+                  <Globe className="w-5 h-5 text-gray-700" />
                 </Link>
                 <Link
                   to={"#"}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition"
                 >
-                  <Twitter className="w-5 h-5 text-gray-700" />
+                  <MessageCircle className="w-5 h-5 text-gray-700" />
                 </Link>
                 <Link
                   to={"#"}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition"
                 >
-                  <Instagram className="w-5 h-5 text-gray-700" />
+                  <Mail className="w-5 h-5 text-gray-700" />
                 </Link>
                 <Link
                   to={"#"}
                   className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition"
                 >
-                  <Linkedin className="w-5 h-5 text-gray-700" />
+                  <Phone className="w-5 h-5 text-gray-700" />
                 </Link>
               </div>
             </div>
@@ -99,9 +99,7 @@ const Footer = () => {
 
           {/* Bottom Bar */}
           <div className="mt-12 pt-8 border-t border-gray-300 flex flex-col sm:flex-row lg:justify-between">
-            <p className="text-gray-600">
-              © 2026 Wanderlust. All rights reserved.
-            </p>
+            <p className="text-gray-600">(c) 2026 Wanderlust. All rights reserved.</p>
             <div className="flex gap-6">
               <Link
                 to={"#"}

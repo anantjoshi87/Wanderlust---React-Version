@@ -29,7 +29,6 @@ const RegisterForm = () => {
   const onSubmit = async (data) => {
     setIsSubbmiting(true);
     try {
-      
       const { confirmPassword, ...payload } = data;
       await registerUser(payload);
       navigate("/verify-email", {
@@ -193,7 +192,7 @@ const RegisterForm = () => {
         {/* Register Button */}
         <button
           type="submit"
-          className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition cursor-pointer"
+          className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition flex justify-center cursor-pointer"
         >
           {isSubbmiting ? <Spinner className="size-8" /> : "Create Account"}
         </button>

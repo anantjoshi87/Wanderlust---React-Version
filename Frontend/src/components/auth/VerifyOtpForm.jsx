@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { otpSchema } from "@/schemas/auth.schema";
 import { useAuth } from "@/hooks/useAuth";
+import { Spinner } from "../ui/spinner";
 
 const VerifyOtpForm = () => {
   const [countDown, setCountDown] = useState(0);
@@ -116,7 +117,7 @@ const VerifyOtpForm = () => {
         {/* Verify Button */}
         <button
           type="submit"
-          className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition"
+          className="w-full bg-[#FF385C] hover:bg-[#e03150] text-white py-3 rounded-xl font-medium transition flex justify-center"
         >
           {isSubbmiting ? <Spinner className="size-8" /> : "Verify OTP"}
         </button>
