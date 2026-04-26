@@ -4,11 +4,7 @@ import Loader from "./Loader";
 import { useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
-  const {
-    user,
-    loading,
-    setShowLoginModal,
-  } = useAuth();
+  const { user, loading, setShowLoginModal } = useAuth();
 
   const location = useLocation();
 
@@ -21,7 +17,7 @@ const ProtectedRoute = ({ children }) => {
   if (loading) return <Loader />;
 
   if (!user) {
-    return <Navigate to={location.state?.from || "/"} replace />;
+    return <Navigate to="/" state={{ from: location.pathname }} replace />;
   }
 
   return children || <Outlet />;

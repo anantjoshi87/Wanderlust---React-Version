@@ -29,6 +29,7 @@ const LoginForm = () => {
     setIsSubbmiting(true);
     try {
       await login(data);
+      
       setTimeout(() => navigate("/", { replace: true }), 300);
     } catch (err) {
       setServerError(err.response?.data?.message || "Wrong Email or Password");

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ListingCard from "../Listings/cards/ListingCard";
 import { getRandomListings } from "@/api/listings.api";
 import { Link } from "react-router-dom";
+import CommonButton from "../common/CommonButton";
 
 const ListingsPreview = () => {
   const [visibleCount, setVisibleCount] = useState(8);
@@ -33,6 +34,7 @@ const ListingsPreview = () => {
     const fetchListings = async () => {
       try {
         const response = await getRandomListings();
+        
         setPreviewListings(response.data.listings);
       } catch (err) {
         console.error(err);
@@ -59,9 +61,7 @@ const ListingsPreview = () => {
         </div>
         <div className="flex justify-center items-center pt-8">
           <Link to={"/listings"}>
-            <button className="py-3 px-4 sm:py-3 sm:px-6 rounded-xl text-gray-700 font-semibold border-2 border-gray-300 hover:border-gray-400 transition whitespace-nowrap cursor-pointer">
-              View all Listings
-            </button>
+            <CommonButton text={"View all Listings"}/>
           </Link>
         </div>
       </div>

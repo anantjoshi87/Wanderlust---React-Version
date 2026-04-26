@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config) => { //run before request
   const token = getToken();
 
   if (token) {
@@ -24,7 +24,7 @@ const refreshClient = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.response.use(
+api.interceptors.response.use( //run after response
   (response) => response,
   async (error) => {
     const originalRequest = error.config;

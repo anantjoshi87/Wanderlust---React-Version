@@ -7,6 +7,8 @@ export const getFeaturedListings = (limit = 8) =>
 
 export const getRandomListings = () => api.get("/listings/random");
 
+export const getListingById = (id) => api.get(`/listings/${id}`);
+
 export const createListing = (data) => api.post("/listings", data);
 
 export const updateListing = (id, data) => api.put(`/listings/${id}`, data);

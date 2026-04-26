@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CommonButton from "../common/CommonButton";
 
 const HeroSection = () => {
   return (
@@ -23,9 +24,7 @@ const HeroSection = () => {
                 </button>
               </Link>
               <Link to={"/listings/new"}>
-                <button className="py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-semibold border-2 border-gray-300 hover:border-gray-400 transition whitespace-nowrap cursor-pointer">
-                  Become a Host
-                </button>
+                <CommonButton text={"Become a Host"}/>
               </Link>
             </div>
           </div>
