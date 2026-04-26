@@ -29,8 +29,6 @@ export const AuthProvider = ({ children }) => {
       const tokenRes = await rotateToken();
       setToken(tokenRes?.data.accessToken);
       const res = await getUser();
-      console.table(res.data.user, "from AuthProvider");
-      
       setUser(res.data.user);
     } catch (err) {
       console.error("Auth check failed:", err.response?.data || err.message);
