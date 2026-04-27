@@ -8,7 +8,7 @@ This document describes the architecture and data flow of the Wanderlust applica
 
 Wanderlust is a travel-stay marketplace where users can browse listings, view details, and (future) book stays.
 
-### Tech Stack:
+### Tech Stack
 
 - **Frontend**: React + Vite
 - **Backend**: Node.js + Express
@@ -98,11 +98,11 @@ External services:
 
 ## 5. Data Layer
 
-### MongoDB:
+### MongoDB
 
 - Stores users, listings, reviews
 
-### Elasticsearch:
+### Elasticsearch
 
 - Stores indexed listing data for fast search
 

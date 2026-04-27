@@ -28,7 +28,7 @@ const ReviewStats = () => {
 
       {/* Stats grid */}
       <div className="pt-6">
-        <div className="grid grid-cols-2 gap-y-4 gap-x-20">
+        <div className="grid md:grid-cols-2 gap-y-4 gap-x-20">
           {stats.map((item, index) => (
             <div key={index} className="flex items-center gap-3">
               {/* Attribute */}

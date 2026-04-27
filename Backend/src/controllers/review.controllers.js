@@ -99,7 +99,7 @@ export const updateReview = async (req, res) => {
 export const deleteReview = async (req, res) => {
   const review = req.review;
 
-  await Review.deleteOne();
+  await review.deleteOne();
 
   return res.status(200).json({
     message: "Review deleted successfully",

@@ -7,7 +7,7 @@ const ListingDetailsGrid = ({listing}) => {
   return (
     <div className="py-16">
       <div className="max-w-[1360px] mx-auto px-6 lg:px-10">
-        <div className="grid xl:grid-cols-3 gap-25">
+        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-15 xl:gap-25">
           <div className="col-span-2">
             <ListingInfo listing={listing}/>
           </div>

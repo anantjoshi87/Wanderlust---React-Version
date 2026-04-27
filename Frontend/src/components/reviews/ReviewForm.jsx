@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import ReviewRating from "./ReviewRating";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { reviewSchema } from "@/schemas/review.schema";
 import { Spinner } from "../ui/spinner";
 import { createReview } from "@/api/reviews.api";
 import toast from "react-hot-toast";
-import { useAuth } from "@/hooks/useAuth";
 
-const ReviewForm = () => {
+const ReviewForm = ({ id, user, onReviewAdded }) => { // id -> listing_id
   const [rating, setRating] = useState(0);
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [serverError, setServerError] = useState("");
-
-  const { user } = useAuth();
 
   const {
     register,
@@ -25,9 +21,8 @@ const ReviewForm = () => {
     resolver: zodResolver(reviewSchema),
   });
 
-  const { id } = useParams(); // id -> listing_id
-
   const onSubmit = async (data) => {
+    
     if (rating === 0) {
       setServerError("Please select a rating");
       return;
@@ -38,6 +33,7 @@ const ReviewForm = () => {
         comment: data.review,
         rating: rating,
       });
+      // onReviewAdded({review: data.review, rating})
       setRating(0);
       reset();
       setServerError("");

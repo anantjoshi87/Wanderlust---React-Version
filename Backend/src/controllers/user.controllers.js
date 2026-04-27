@@ -8,6 +8,7 @@ export const getMyProfile = async (req, res) => {
     message: "User fetched successfully",
     status: true,
     user: {
+      _id: req.user._id,
       username: req.user.username,
       email: req.user.email,
     },

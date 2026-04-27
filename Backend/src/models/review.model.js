@@ -30,7 +30,8 @@ const reviewSchema = new mongoose.Schema(
 );
 
 reviewSchema.index({ listing: 1 });
-reviewSchema.index({ author: 1, listing: 1 }, { unique: true });
+// now one user can make only one review per listing
+reviewSchema.index({ author: 1, listing: 1 }, { unique: false });
 
 const Review = mongoose.model("Review", reviewSchema);
 export default Review;
