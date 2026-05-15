@@ -30,6 +30,5 @@ app.use((err, req, res, next) => {
   console.error(err); // log the error for debugging
   res.status(500).json({ message: err.message || "Server Error" });
 });
-``;
 
 export default app;

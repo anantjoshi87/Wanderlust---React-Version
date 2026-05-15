@@ -41,9 +41,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className={"h-20 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100"}
-    >
+    <nav className="sticky top-0 z-50 h-20 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100">
       <div className="max-w-[1360px] mx-auto px-6 lg:px-10 h-full flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-1 sm:flex-0">
@@ -77,7 +75,7 @@ const Navbar = () => {
               onClick={handleBecomeHost}
               className={({ isActive }) =>
                 isActive
-                  ? "text-gray-900 font-semibold"
+                  ? "text-gray-900 font-semibold whitespace-nowrap"
                   : "text-gray-700 hover:text-gray-900 transition-colors duration-200 whitespace-nowrap"
               }
             >
