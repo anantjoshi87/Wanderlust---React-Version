@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 
+import { LISTING_RULES } from "@/constants";
+
 const amenitiesList = [
   { id: "wifi", name: "WiFi", icon: Wifi },
   { id: "kitchen", name: "Kitchen", icon: Utensils },

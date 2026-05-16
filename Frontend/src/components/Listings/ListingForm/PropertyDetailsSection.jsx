@@ -19,7 +19,7 @@ const PropertyDetailsSection = () => {
 
   const decrement = (field) => {
     const current = watch(`propertyDetails.${field}`);
-    if (current > 0) setValue(`propertyDetails.${field}`, current - 1);
+    if (current > 1) setValue(`propertyDetails.${field}`, current - 1);
   };
 
   return (
@@ -45,7 +45,7 @@ const PropertyDetailsSection = () => {
               <button
                 type="button"
                 onClick={() => decrement(item.field)}
-                disabled={watch(`propertyDetails.${item.field}`) == 0}
+                disabled={watch(`propertyDetails.${item.field}`) == 1}
                 className="w-9 h-9 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
               >
                 <Minus className="w-4 h-4 text-gray-600" />

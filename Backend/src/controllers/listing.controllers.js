@@ -12,7 +12,7 @@ export const getFeaturedListings = async (req, res) => {
   });
 };
 
-export const getRandomListings = async (req,res) => {
+export const getRandomListings = async (req, res) => {
   const limit = parseInt(req.query.limit) || 8;
   const listings = await Listing.aggregate([{ $sample: { size: limit } }]);
 
@@ -21,7 +21,7 @@ export const getRandomListings = async (req,res) => {
     listings_count: listings.length,
     listings,
   });
-}
+};
 
 export const getAllListings = async (req, res) => {
   let { search, category, min, max, page = 1, limit = 12 } = req.query;
@@ -106,22 +106,28 @@ export const showListing = async (req, res) => {
 export const createListing = async (req, res) => {
   const { title, description, price, address, country } = req.body;
 
-  if (!req.file) {
+  if (!req.files || req.files.length < 5) {
     return res.status(400).json({
       message: "Image is required",
     });
   }
 
-  //upload image
-  const result = await uploadFile(req.file.buffer);
+  //upload images
+  const uploadedImages = await Promise.all(
+    req.files.map(async (file) => {
+      const result = await uploadFile(req.file.buffer);
+
+      return {
+        url: result.url,
+        fileId: result.fileId,
+      };
+    }),
+  );
 
   const listing = await Listing.create({
     title,
     description,
-    image: {
-      url: result.url,
-      fileId: result.fileId,
-    },
+    images: uploadedImages,
     price,
     address,
     country,

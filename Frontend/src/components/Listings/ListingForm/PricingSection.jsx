@@ -4,8 +4,11 @@ import { useFormContext } from "react-hook-form";
 const PricingSection = () => {
   const {
     register,
+    watch,
     formState: { errors },
   } = useFormContext();
+
+  const price = watch("price");
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
@@ -30,6 +33,9 @@ const PricingSection = () => {
           / night
         </div>
       </div>
+      {price <= 0 && (
+        <p className="flex justify-end mt-1 text-xs text-amber-600">Enter a nightly price</p>
+      )}
     </div>
   );
 };

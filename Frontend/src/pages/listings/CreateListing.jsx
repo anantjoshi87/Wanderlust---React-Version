@@ -1,13 +1,16 @@
 import ListingForm from "@/components/Listings/ListingForm/ListingForm";
 import { ChevronLeft } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { listingSchema } from "@/schemas/listing.schema";
 import ListingCardPreview from "@/components/Listings/ListingForm/ListingCardPreview";
+import { createListing } from "@/api/listings.api";
 
 const CreateListing = () => {
+  const [isSubbmitting, setIsSubbmitting] = useState(false);
+
   const methods = useForm({
     resolver: zodResolver(listingSchema),
 
@@ -18,13 +21,13 @@ const CreateListing = () => {
       address: "",
       country: "",
       price: undefined,
-      photos: [],
+      images: [],
       amenities: [],
       propertyDetails: {
-        guests: 0,
-        bedrooms: 0,
-        beds: 0,
-        bathrooms: 0,
+        guests: 1,
+        bedrooms: 1,
+        beds: 1,
+        bathrooms: 1,
       },
     },
   });
@@ -32,7 +35,32 @@ const CreateListing = () => {
   const watchData = useWatch({ control: methods.control });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const formData = new FormData();
+
+      //Basic fields
+      formData.append(data.title);
+      formData.append(data.description);
+      formData.append(data.category);
+      formData.append(data.address);
+      formData.append(data.country);
+      formData.append(data.price);
+
+      //Arrays /objects
+      formData.append("amenities", JSON.stringify(data.amenities));
+
+      formData.append("propertyDetails", JSON.stringify(data.propertyDetails));
+
+      //Images
+      data.images.forEach((image) => {
+        formData.append("images", image.file);
+      });
+
+      const response = await createListing(formData);
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

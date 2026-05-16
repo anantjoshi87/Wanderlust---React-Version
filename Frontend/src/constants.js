@@ -124,3 +124,12 @@ export const footerLinks = {
     ],
   },
 };
+
+export const LISTING_RULES = {
+  TITLE_MIN: 1,
+  DESCRIPTION_MIN: 1,
+  ADDRESS_MIN: 5,
+  COUNTRY_MIN: 2,
+  IMAGES_MIN: 1,
+  AMENITIES_MIN: 1
+};

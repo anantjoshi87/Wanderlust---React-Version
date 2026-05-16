@@ -1,55 +1,102 @@
-import { CompletionBar } from "@/components/common/CompletionBar";
+import React, { useMemo } from "react";
 import { Circle, CircleCheckBig, ImageIcon } from "lucide-react";
-import React from "react";
+
+import { CompletionBar } from "@/components/common/CompletionBar";
+import { LISTING_RULES } from "@/constants";
+
+const { IMAGES_MIN } = LISTING_RULES;
 
 const ListingCardPreview = ({ formData }) => {
-  const completionChecks = [
-    {
-      label: "Basic info added",
-      completed: !!(
-        formData.title &&
-        formData.description &&
-        formData.category &&
-        formData.address &&
-        formData.country
-      ),
-    },
-    {
-      label: "Photos uploaded",
-      // completed: formData.images.length >= 5,
-    },
-    {
-      label: "Price set",
-      completed: formData.price > 0,
-    },
-    {
-      label: "Amenities selected",
-      completed: formData.amenities.length > 0,
-    },
-    {
-      label: "Property details",
-      completed:
-        formData.propertyDetails.guests > 0 &&
-        formData.propertyDetails.bedrooms > 0 &&
-        formData.propertyDetails.beds >0 &&
-        formData.propertyDetails.bathrooms > 0,
-    },
-  ];
-  
+  const {
+    title,
+    description,
+    category,
+    address,
+    country,
+    images = [],
+    price,
+    amenities = [],
+    propertyDetails = {},
+  } = formData;
+
+  const { guests = 0, bedrooms = 0, beds = 0, bathrooms = 0 } = propertyDetails;
+
+  const completionChecks = useMemo(
+    () => [
+      {
+        label: "Basic info added",
+        completed:
+          !!title && !!description && !!category && !!address && !!country,
+      },
+
+      {
+        label: "Photos uploaded",
+        completed: images.length >= IMAGES_MIN,
+      },
+
+      {
+        label: "Price set",
+        completed: price > 0,
+      },
+
+      {
+        label: "Amenities selected",
+        completed: amenities.length > 0,
+      },
+
+      {
+        label: "Property details",
+        completed: guests > 0 && bedrooms > 0 && beds > 0 && bathrooms > 0,
+      },
+    ],
+    [
+      title,
+      description,
+      category,
+      address,
+      country,
+      images.length,
+      price,
+      amenities.length,
+      guests,
+      bedrooms,
+      beds,
+      bathrooms,
+    ],
+  );
+
+  const completionPercentage = useMemo(() => {
+    const completedCount = completionChecks.filter(
+      (item) => item.completed,
+    ).length;
+
+    return Math.round((completedCount / completionChecks.length) * 100);
+  }, [completionChecks]);
+
+  const previewImage = images?.[0]?.preview;
+
   return (
     <div className="sticky top-6 w-full max-w-sm">
       <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
         {/* Image */}
         <div className="relative h-60 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="mb-4 rounded-full bg-white p-4 shadow-md">
-              <ImageIcon className="text-gray-500" size={30} />
-            </div>
+          {previewImage ? (
+            <img
+              src={previewImage}
+              alt={title || "Listing preview"}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="mb-4 rounded-full bg-white p-4 shadow-md">
+                <ImageIcon className="text-gray-500" size={30} />
+              </div>
 
-            <p className="text-sm font-medium text-gray-600">
-              No photos uploaded
-            </p>
-          </div>
+              <p className="text-sm font-medium text-gray-600">
+                No photos uploaded
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Body */}
@@ -57,20 +104,20 @@ const ListingCardPreview = ({ formData }) => {
           {/* Heading */}
           <div className="space-y-2">
             <h3 className="line-clamp-1 text-xl font-semibold text-gray-900">
-              {formData?.title || "Untitled Listing"}
+              {title || "Untitled Listing"}
             </h3>
 
             <p className="line-clamp-3 text-sm leading-relaxed text-gray-500">
-              {formData?.description ||
+              {description ||
                 "Your listing description will appear here once you start adding details."}
             </p>
           </div>
 
           {/* Price */}
-          {formData?.price > 0 && (
+          {price > 0 && (
             <div className="flex items-end gap-1 border-b border-gray-100 pb-5">
               <span className="text-3xl font-bold tracking-tight text-gray-900">
-                ${formData?.price}
+                ${price}
               </span>
 
               <span className="mb-1 text-sm text-gray-500">/ night</span>
@@ -79,13 +126,13 @@ const ListingCardPreview = ({ formData }) => {
 
           {/* Completion */}
           <div className="space-y-3">
-            <CompletionBar />
+            <CompletionBar progress={completionPercentage} />
           </div>
 
           {/* Checklist */}
           <div className="space-y-3 rounded-2xl bg-gray-50 p-4">
-            {completionChecks.map((check, index) => (
-              <div key={index} className="flex items-center gap-3">
+            {completionChecks.map((check) => (
+              <div key={check.label} className="flex items-center gap-3">
                 <span
                   className={`shrink-0 ${
                     check.completed ? "text-[#FF385C]" : "text-gray-400"
@@ -126,11 +173,19 @@ const ListingCardPreview = ({ formData }) => {
 
           {/* Buttons */}
           <div className="space-y-3 pt-1">
-            <button className="w-full rounded-2xl bg-[#FF385C] py-3 font-medium text-white transition-all duration-200 hover:bg-[#E31C5F] hover:shadow-lg">
+            <button
+              disabled={completionPercentage < 100}
+              type="submit"
+              className={`w-full rounded-2xl py-3 font-medium transition-all duration-200 ${
+                completionPercentage < 100
+                  ? "cursor-not-allowed bg-gray-300 text-gray-500"
+                  : "bg-[#FF385C] text-white hover:bg-[#E31C5F] hover:shadow-lg cursor-pointer"
+              }`}
+            >
               Publish Listing
             </button>
 
-            <button className="w-full rounded-2xl border border-gray-300 bg-white py-3 font-medium text-gray-700 transition-all duration-200 hover:border-gray-400 hover:bg-gray-50">
+            <button type="button" className="w-full rounded-2xl border border-gray-300 bg-white py-3 font-medium text-gray-700 transition-all duration-200 hover:border-gray-400 hover:bg-gray-50 cursor-pointer">
               Save Draft
             </button>
           </div>
@@ -140,4 +195,4 @@ const ListingCardPreview = ({ formData }) => {
   );
 };
 
-export default ListingCardPreview;
+export default React.memo(ListingCardPreview);

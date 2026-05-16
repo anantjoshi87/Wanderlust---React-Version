@@ -16,7 +16,7 @@ router
   .post(
     protect,
     validateListing,
-    upload.single("image"),
+    upload.array("images",10),
     wrapAsync(listingControllers.createListing),
   );
 

@@ -1,5 +1,8 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { LISTING_RULES } from "@/constants";
+
+const { TITLE_MIN, DESCRIPTION_MIN, ADDRESS_MIN, COUNTRY_MIN } = LISTING_RULES;
 
 const categoriesList = [
   { id: "beach", name: "Beach", icon: "🏖️" },
@@ -21,6 +24,10 @@ const BasicInfoSection = () => {
   } = useFormContext();
 
   const selectedCategory = watch("category");
+  const title = watch("title").length || 0;
+  const description = watch("description").length || 0;
+  const address = watch("address").length || 0;
+  const country = watch("country").length || 0;
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
@@ -31,12 +38,19 @@ const BasicInfoSection = () => {
       <div className="space-y-6">
         {/* Title */}
         <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Listing Title
-          </label>
+          <div className="flex justify-between">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Listing Title
+            </label>
+            {title < TITLE_MIN && (
+              <p className="mt-1 text-xs text-red-500">
+                * {title}/{TITLE_MIN} characters
+              </p>
+            )}
+          </div>
           <input
             type="text"
             id="title"
@@ -49,12 +63,20 @@ const BasicInfoSection = () => {
         {/* Description */}
         <div>
           <input type="hidden" {...register("category")} />
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Description
-          </label>
+          <div className="flex justify-between">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Description
+            </label>
+            {description < DESCRIPTION_MIN && (
+              <p className="mt-1 text-xs text-red-500">
+                * {description}/{DESCRIPTION_MIN} characters
+              </p>
+            )}
+          </div>
+
           <textarea
             id="description"
             {...register("description")}
@@ -70,6 +92,7 @@ const BasicInfoSection = () => {
           <label className="block text-sm font-medium text-gray-700 mb-3">
             Category
           </label>
+
           <div className="grid grid-cols-4 gap-3">
             {categoriesList.map((category) => {
               return (
@@ -96,16 +119,29 @@ const BasicInfoSection = () => {
               );
             })}
           </div>
+          {selectedCategory < DESCRIPTION_MIN && (
+            <p className="flex justify-end mt-2 text-xs text-red-500">
+              * category is required
+            </p>
+          )}
         </div>
 
         {/* Address */}
         <div>
+          <div className="flex justify-between">
           <label
             htmlFor="address"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
             Address
           </label>
+          {address < ADDRESS_MIN && (
+              <p className="mt-1 text-xs text-red-500">
+                * {address}/{ADDRESS_MIN} characters
+              </p>
+            )}
+          </div>
+
           <input
             type="text"
             id="address"
@@ -117,12 +153,19 @@ const BasicInfoSection = () => {
 
         {/* Country */}
         <div>
+          <div className="flex justify-between">
           <label
             htmlFor="country"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
             Country
           </label>
+          {country < COUNTRY_MIN && (
+              <p className="mt-1 text-xs text-red-500">
+                * {country}/{COUNTRY_MIN} characters
+              </p>
+            )}
+          </div>
           <input
             type="text"
             id="country"

@@ -15,7 +15,7 @@ const listingSchema = new mongoose.Schema(
       minlength: 5,
     },
 
-    image: [
+    images: [
       {
         filename: {
           type: String,
