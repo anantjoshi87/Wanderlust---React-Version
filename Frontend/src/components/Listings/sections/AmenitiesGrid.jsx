@@ -2,9 +2,12 @@ import CommonButton from "@/components/common/CommonButton";
 import {
   Car,
   ChefHat,
+  Dumbbell,
   Shield,
   Snowflake,
   Tv,
+  Utensils,
+  WashingMachine,
   Waves,
   Wifi,
   Wind,
@@ -12,17 +15,17 @@ import {
 import React from "react";
 
 const amenities = [
-  { icon: <Wifi />, features: "Fast WiFi" },
-  { icon: <ChefHat />, features: "Full Kitchen" },
-  { icon: <Car />, features: "Free Parking" },
-  { icon: <Snowflake />, features: "Air Conditioning" },
-  { icon: <Waves />, features: "Private Pool" },
-  { icon: <Tv />, features: "Smart TV" },
-  { icon: <Wind />, features: "Outdoor Patio" },
-  { icon: <Shield />, features: "Security System" },
+  { id: "wifi", icon: <Wifi />, features: "Fast WiFi" },
+  { id: "kitchen", icon: <Utensils />, features: "Full Kitchen" },
+  { id: "parking", icon: <Car />, features: "Free Parking" },
+  { id: "ac", icon: <Wind />, features: "Air Conditioning" },
+  { id: "pool", icon: <Waves />, features: "Private Pool" },
+  { id: "tv", icon: <Tv />, features: "Smart TV" },
+  { id: "washer", icon: <WashingMachine />, features: "Washing Machine" },
+  { id: "gym", icon: <Dumbbell />, features: "Gym" },
 ];
 
-const AmenitiesGrid = () => {
+const AmenitiesGrid = ({ listing }) => {
   return (
     <div className="border-b border-gray-200 pb-6 mt-6">
       <div className="flex flex-col gap-8">

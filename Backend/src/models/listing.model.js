@@ -7,12 +7,13 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: [true, "Title is required"],
       trim: true,
+      minlength: 5
     },
 
     description: {
       type: String,
       required: true,
-      minlength: 5,
+      minlength: 50,
     },
 
     images: [
@@ -70,24 +71,26 @@ const listingSchema = new mongoose.Schema(
       },
     ],
 
-    guests: {
-      type: Number,
-      default: 1,
-    },
+    propertyDetails: {
+      guests: {
+        type: Number,
+        default: 1,
+      },
 
-    bedrooms: {
-      type: Number,
-      default: 1,
-    },
+      bedrooms: {
+        type: Number,
+        default: 1,
+      },
 
-    beds: {
-      type: Number,
-      default: 1,
-    },
+      beds: {
+        type: Number,
+        default: 1,
+      },
 
-    bathrooms: {
-      type: Number,
-      default: 1,
+      bathrooms: {
+        type: Number,
+        default: 1,
+      },
     },
 
     owner: {

@@ -104,7 +104,16 @@ export const showListing = async (req, res) => {
 };
 
 export const createListing = async (req, res) => {
-  const { title, description, price, address, country } = req.body;
+  const {
+    title,
+    description,
+    category,
+    address,
+    country,
+    price,
+    amenities,
+    propertyDetails,
+  } = req.body;
 
   if (!req.files || req.files.length < 5) {
     return res.status(400).json({
@@ -115,7 +124,7 @@ export const createListing = async (req, res) => {
   //upload images
   const uploadedImages = await Promise.all(
     req.files.map(async (file) => {
-      const result = await uploadFile(req.file.buffer);
+      const result = await uploadFile(file.buffer);
 
       return {
         url: result.url,
@@ -128,9 +137,12 @@ export const createListing = async (req, res) => {
     title,
     description,
     images: uploadedImages,
+    category,
     price,
     address,
     country,
+    amenities,
+    propertyDetails,
     owner: req.user._id,
   });
 

@@ -3,7 +3,7 @@ import * as listingControllers from "../controllers/listing.controllers.js";
 import { wrapAsync } from "../utils/wrapAsync.js";
 import { protect } from "../middlewares/auth.middlewares.js";
 import multer from "multer";
-import { isListingOwner } from "../middlewares/listing.middlewares.js";
+import { isListingOwner, parseListingFields } from "../middlewares/listing.middlewares.js";
 import { validateListing } from "../middlewares/validate.middleware.js";
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -15,8 +15,9 @@ router
   .get(wrapAsync(listingControllers.getAllListings))
   .post(
     protect,
-    validateListing,
     upload.array("images",10),
+    parseListingFields,
+    validateListing,
     wrapAsync(listingControllers.createListing),
   );
 
@@ -30,8 +31,8 @@ router
   .put(
     protect,
     isListingOwner,
-    validateListing,
     upload.single("image"),
+    validateListing,
     wrapAsync(listingControllers.editListing),
   )
   .delete(protect, isListingOwner, wrapAsync(listingControllers.deleteListing));

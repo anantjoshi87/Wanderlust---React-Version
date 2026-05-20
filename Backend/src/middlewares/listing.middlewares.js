@@ -20,3 +20,17 @@ export const isListingOwner = async (req, res, next) => {
   req.listing = listing;
   next();
 };
+
+export const parseListingFields = (req, res, next) => {
+  try {
+    req.body.amenities = JSON.parse(req.body.amenities || "[]");
+    req.body.propertyDetails = JSON.parse(req.body.propertyDetails || "{}");
+
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid JSON format",
+    });
+  }
+};

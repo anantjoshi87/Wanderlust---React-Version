@@ -3,10 +3,11 @@ import { Circle, CircleCheckBig, ImageIcon } from "lucide-react";
 
 import { CompletionBar } from "@/components/common/CompletionBar";
 import { LISTING_RULES } from "@/constants";
+import { Spinner } from "@/components/ui/spinner";
 
 const { IMAGES_MIN } = LISTING_RULES;
 
-const ListingCardPreview = ({ formData }) => {
+const ListingCardPreview = ({ formData, isSubbmitting }) => {
   const {
     title,
     description,
@@ -179,13 +180,16 @@ const ListingCardPreview = ({ formData }) => {
               className={`w-full rounded-2xl py-3 font-medium transition-all duration-200 ${
                 completionPercentage < 100
                   ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                  : "bg-[#FF385C] text-white hover:bg-[#E31C5F] hover:shadow-lg cursor-pointer"
+                  : "flex justify-center bg-[#FF385C] text-white hover:bg-[#E31C5F] hover:shadow-lg cursor-pointer"
               }`}
             >
-              Publish Listing
+              {isSubbmitting ? <Spinner size={18} /> : "Publish Listing"}
             </button>
 
-            <button type="button" className="w-full rounded-2xl border border-gray-300 bg-white py-3 font-medium text-gray-700 transition-all duration-200 hover:border-gray-400 hover:bg-gray-50 cursor-pointer">
+            <button
+              type="button"
+              className="w-full rounded-2xl border border-gray-300 bg-white py-3 font-medium text-gray-700 transition-all duration-200 hover:border-gray-400 hover:bg-gray-50 cursor-pointer"
+            >
               Save Draft
             </button>
           </div>

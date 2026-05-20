@@ -35,16 +35,17 @@ const CreateListing = () => {
   const watchData = useWatch({ control: methods.control });
 
   const onSubmit = async (data) => {
+    setIsSubbmitting(true);
     try {
       const formData = new FormData();
 
       //Basic fields
-      formData.append(data.title);
-      formData.append(data.description);
-      formData.append(data.category);
-      formData.append(data.address);
-      formData.append(data.country);
-      formData.append(data.price);
+      formData.append("title",data.title);
+      formData.append("description",data.description);
+      formData.append("category",data.category);
+      formData.append("address",data.address);
+      formData.append("country",data.country);
+      formData.append("price",data.price);
 
       //Arrays /objects
       formData.append("amenities", JSON.stringify(data.amenities));
@@ -60,6 +61,8 @@ const CreateListing = () => {
       console.log(response);
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsSubbmitting(false);
     }
   };
 
@@ -100,7 +103,10 @@ const CreateListing = () => {
                 </div>
                 {/* preview */}
                 <div className="col-span-1 sticky top-8 h-fit">
-                  <ListingCardPreview formData={watchData} />
+                  <ListingCardPreview
+                    formData={watchData}
+                    isSubbmitting={isSubbmitting}
+                  />
                 </div>
               </div>
             </form>

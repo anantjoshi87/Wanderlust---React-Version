@@ -41,11 +41,13 @@ const ListingDetails = () => {
         </div>
       </div>
 
-      <ListingGallery />
       {isLoading || !listing ? (
         <div>"Loading</div>
       ) : (
-        <ListingDetailsGrid listing={listing} />
+        <>
+          <ListingGallery listing={listing} />
+          <ListingDetailsGrid listing={listing} />
+        </>
       )}
     </>
   );
