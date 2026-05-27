@@ -1,6 +1,6 @@
 import api from "./axios";
 
-export const getAllListings = (params) => api.get("/listings", { params });
+export const getAllListings = (params) => api.get("/listings", { params }); // params -> search, category, min, max, page, limit
 
 export const getFeaturedListings = (limit = 8) =>
   api.get(`/listings/featured?limit=${limit}`);
@@ -15,4 +15,4 @@ export const updateListing = (id, data) => api.put(`/listings/${id}`, data);
 
 export const deleteListing = (id) => api.delete(`/listings/${id}`);
 
-// params -> search, category, min, max, page, limit
+export const getMyListings = () => api.get(`/listings/my-listings`);

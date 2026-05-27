@@ -103,6 +103,16 @@ export const showListing = async (req, res) => {
   });
 };
 
+export const getMyListings = async (req, res) => {
+  const listings = await Listing.find({ owner: req.user._id });
+
+  return res.status(200).json({
+    message: "listings fetched successfully",
+    success: true,
+    listings,
+  });
+};
+
 export const createListing = async (req, res) => {
   const {
     title,

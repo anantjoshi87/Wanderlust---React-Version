@@ -4,12 +4,13 @@ import { setToken, getToken, clearToken } from "@/utils/tokenManager";
 const api = axios.create({
   baseURL: "http://localhost:8080/api",
   withCredentials: true,
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
-api.interceptors.request.use((config) => { //run before request
+api.interceptors.request.use((config) => {
+  //run before request
   const token = getToken();
 
   if (token) {
@@ -24,7 +25,8 @@ const refreshClient = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.response.use( //run after response
+api.interceptors.response.use(
+  //run after response
   (response) => response,
   async (error) => {
     const originalRequest = error.config;

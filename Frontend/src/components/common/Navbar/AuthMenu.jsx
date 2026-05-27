@@ -1,57 +1,35 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
+
 import {
-  BadgeCheckIcon,
-  BellIcon,
-  CreditCardIcon,
-  LogOutIcon,
-} from "lucide-react";
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function AuthMenu() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const location = useLocation();
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <Avatar>
-            {/* <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" /> */}
-            <AvatarFallback className="bg-black text-white">
-              {user.username.slice(0, 1)}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BadgeCheckIcon />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCardIcon />
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BellIcon />
-            Notifications
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
-          <LogOutIcon />
-          Log Out
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Link
+      to="/user"
+      state={{
+        from: location.pathname,
+      }}
+    >
+      <Avatar className={"cursor-pointer"}>
+        {user.profile_photo ? (
+          <AvatarImage src={user.profile_photo} />
+        ) : (
+          <AvatarFallback className="bg-black text-white">
+            {user.username.slice(0, 1)}
+          </AvatarFallback>
+        )}
+      </Avatar>
+    </Link>
   );
 }

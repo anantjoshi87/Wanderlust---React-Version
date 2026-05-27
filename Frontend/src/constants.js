@@ -131,5 +131,59 @@ export const LISTING_RULES = {
   ADDRESS_MIN: 5,
   COUNTRY_MIN: 2,
   IMAGES_MIN: 5,
-  AMENITIES_MIN: 1
+  AMENITIES_MIN: 1,
 };
+
+import {
+  LayoutDashboard,
+  User,
+  List,
+  CalendarDays,
+  Heart,
+  Bell,
+  Shield,
+  Settings,
+} from "lucide-react";
+
+export const userNavItems = [
+  {
+    name: "Profile",
+    href: "/user/profile",
+    icon: User,
+  },
+  {
+    name: "My Listings",
+    href: "/user/my-listings",
+    icon: List,
+  },
+  {
+    name: "Dashboard",
+    href: "/user/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    name: "Bookings",
+    href: "/user/my-bookings",
+    icon: CalendarDays,
+  },
+  {
+    name: "Saved",
+    href: "/user/saved",
+    icon: Heart,
+  },
+  {
+    name: "Notifications",
+    href: "/user/notifications",
+    icon: Bell,
+  },
+  {
+    name: "Security",
+    href: "/user/security",
+    icon: Shield,
+  },
+  {
+    name: "Settings",
+    href: "/user/settings",
+    icon: Settings,
+  },
+];
