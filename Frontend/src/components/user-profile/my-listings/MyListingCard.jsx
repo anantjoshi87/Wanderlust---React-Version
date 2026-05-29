@@ -6,7 +6,7 @@ const MyListingCard = ({listing}) => {
   const isPublished = listing.status === "Published";
 
   return (
-    <div className="group bg-white rounded-[24px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 overflow-hidden flex flex-col cursor-pointer">
+    <div className="group bg-white rounded-[24px] border border-border/40 shadow-[0_4px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 overflow-hidden flex flex-col">
       {/* Image Container */}
       <div className="relative h-56 w-full overflow-hidden">
         <img

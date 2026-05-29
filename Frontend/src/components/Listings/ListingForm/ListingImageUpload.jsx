@@ -2,12 +2,14 @@ import { Upload, X } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { LISTING_RULES } from "@/constants";
+import { useListingController } from "@/hooks/useListings";
 
 const { IMAGES_MIN } = LISTING_RULES;
 
 const ListingImageUpload = () => {
   const fileInputRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
+  const { isEdit } = useListingController();
 
   const {
     watch,
@@ -23,7 +25,7 @@ const ListingImageUpload = () => {
     const fileArray = Array.from(files);
     const formattedImages = fileArray.map((file) => ({
       file,
-      preview: URL.createObjectURL(file),
+      url: URL.createObjectURL(file), //preview
     }));
 
     setValue("images", [...images, ...formattedImages]);
@@ -96,12 +98,15 @@ const ListingImageUpload = () => {
             {/* Primary Image */}
             <div className="col-span-2 relative group">
               <img
-                src={images[0].preview}
+                src={images[0].url}
                 alt="Primary"
                 className="w-full h-80 object-cover rounded-xl"
               />
               <button
-                onClick={() => removeImage(0)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeImage(0);
+                }}
                 className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
               >
                 <X className="w-4 h-4 text-gray-700" />
@@ -115,12 +120,15 @@ const ListingImageUpload = () => {
             {images.slice(1).map((image, index) => (
               <div key={index + 1} className="relative group">
                 <img
-                  src={image.preview}
+                  src={image.url}
                   alt={`Photo ${index + 2}`}
                   className="w-full h-48 object-cover rounded-xl"
                 />
                 <button
-                  onClick={() => removeImage(index + 1)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeImage(index + 1);
+                  }}
                   className="absolute top-3 right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                 >
                   <X className="w-4 h-4 text-gray-700" />

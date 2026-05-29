@@ -24,10 +24,10 @@ const BasicInfoSection = () => {
   } = useFormContext();
 
   const selectedCategory = watch("category");
-  const title = watch("title").length || 0;
-  const description = watch("description").length || 0;
-  const address = watch("address").length || 0;
-  const country = watch("country").length || 0;
+  const title = watch("title") || "";
+  const description = watch("description") || "";
+  const address = watch("address") || "";
+  const country = watch("country") || "";
 
   return (
     <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
@@ -45,7 +45,7 @@ const BasicInfoSection = () => {
             >
               Listing Title
             </label>
-            {title < TITLE_MIN && (
+            {title.length < TITLE_MIN && (
               <p className="mt-1 text-xs text-red-500">
                 * {title}/{TITLE_MIN} characters
               </p>
@@ -70,7 +70,7 @@ const BasicInfoSection = () => {
             >
               Description
             </label>
-            {description < DESCRIPTION_MIN && (
+            {description.length < DESCRIPTION_MIN && (
               <p className="mt-1 text-xs text-red-500">
                 * {description}/{DESCRIPTION_MIN} characters
               </p>
@@ -119,7 +119,7 @@ const BasicInfoSection = () => {
               );
             })}
           </div>
-          {selectedCategory < DESCRIPTION_MIN && (
+          {selectedCategory==="" && (
             <p className="flex justify-end mt-2 text-xs text-red-500">
               * category is required
             </p>
@@ -135,7 +135,7 @@ const BasicInfoSection = () => {
           >
             Address
           </label>
-          {address < ADDRESS_MIN && (
+          {address.length < ADDRESS_MIN && (
               <p className="mt-1 text-xs text-red-500">
                 * {address}/{ADDRESS_MIN} characters
               </p>
@@ -160,7 +160,7 @@ const BasicInfoSection = () => {
           >
             Country
           </label>
-          {country < COUNTRY_MIN && (
+          {country.length < COUNTRY_MIN && (
               <p className="mt-1 text-xs text-red-500">
                 * {country}/{COUNTRY_MIN} characters
               </p>

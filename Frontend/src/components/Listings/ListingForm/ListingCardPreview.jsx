@@ -4,10 +4,12 @@ import { Circle, CircleCheckBig, ImageIcon } from "lucide-react";
 import { CompletionBar } from "@/components/common/CompletionBar";
 import { LISTING_RULES } from "@/constants";
 import { Spinner } from "@/components/ui/spinner";
+import { useListingController } from "@/hooks/useListings";
 
 const { IMAGES_MIN } = LISTING_RULES;
 
-const ListingCardPreview = ({ formData, isSubbmitting }) => {
+const ListingCardPreview = () => {
+  const { watchData: formData, isSubbmitting } = useListingController();
   const {
     title,
     description,
@@ -74,7 +76,7 @@ const ListingCardPreview = ({ formData, isSubbmitting }) => {
     return Math.round((completedCount / completionChecks.length) * 100);
   }, [completionChecks]);
 
-  const previewImage = images?.[0]?.preview;
+  const previewImage = images?.[0]?.url;
 
   return (
     <div className="sticky top-6 w-full max-w-sm">

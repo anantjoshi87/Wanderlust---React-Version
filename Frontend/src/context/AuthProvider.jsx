@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AuthContext } from "./authContextBase";
+import { AuthContext } from "./ContextBase";
 import {
   registerUser,
   verifyEmail,
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       const tokenRes = await rotateToken();
       setToken(tokenRes?.data.accessToken);
       const res = await getUser();
-      
+
       setUser(res.data.user);
     } catch (err) {
       console.error("Auth check failed:", err.response?.data || err.message);

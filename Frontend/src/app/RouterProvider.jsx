@@ -9,7 +9,7 @@ import ResetPassword from "../pages/auth/ResetPassword";
 
 import ListingsPage from "../pages/listings/ListingsPage";
 import ListingDetails from "../pages/listings/ListingDetails";
-import CreateListing from "../pages/listings/CreateListing";
+import CreateListing from "../pages/listings/ListingFormPage.jsx";
 import EditListing from "../pages/listings/EditListing";
 
 import Profile from "../pages/user-profile/Profile";
@@ -27,6 +27,7 @@ import { Settings } from "lucide-react";
 import UserProfileLayout from "@/pages/user-profile/UserProfileLayout";
 import UserPlaceholderPage from "@/pages/user-profile/UserPlaceholderPage";
 import MyListings from "@/pages/user-profile/MyListings";
+import ListingFormPage from "../pages/listings/ListingFormPage.jsx";
 
 const RouterProvider = () => {
   return (
@@ -42,8 +43,8 @@ const RouterProvider = () => {
 
           {/* protected listings */}
           <Route element={<ProtectedRoute />}>
-            <Route path="new" element={<CreateListing />} />
-            <Route path=":id/edit" element={<EditListing />} />
+            <Route path="new" element={<ListingFormPage />} />
+            <Route path=":id/edit" element={<ListingFormPage />} />
           </Route>
         </Route>
       </Route>
